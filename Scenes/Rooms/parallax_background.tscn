@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://doii5c4r0rwv2"]
+
+[ext_resource type="Texture2D" uid="uid://d16dufker8hg" path="res://Textures/Backgrounds/Placeholder/checker_64x64.png" id="1_a3h08"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(64, 64)
+
+[node name="backgroundSprite" type="Sprite2D" parent="ParallaxLayer"]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(584, 283)
+texture = ExtResource("1_a3h08")
+region_enabled = true
+region_rect = Rect2(0, 0, 1300, 800)

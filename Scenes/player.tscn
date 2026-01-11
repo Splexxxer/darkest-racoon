@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://5hiro31fug4w"]
+
+[ext_resource type="Script" uid="uid://i8to3ha7nleh" path="res://Scripts/PlayerRelated/CharacterController.cs" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://cruxnv0jhcik0" path="res://Textures/PlayerSprite/Placeholder/White_Pixel_1x1.jpg" id="2_6t5aa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldjyv"]
+size = Vector2(42.5, 42.5)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cvnsp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.43529412, 0.30588236, 0.21568628, 1)
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_6t5aa")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+scale = Vector2(0.9, 0.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_ldjyv")

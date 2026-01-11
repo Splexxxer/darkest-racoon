@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://6e7ucl5ee0fa"]
+
+[ext_resource type="Script" uid="uid://b5tmtryxc1gpx" path="res://Scripts/Enemies/BasicEnemyController.cs" id="1_ycmn1"]
+[ext_resource type="Texture2D" uid="uid://cruxnv0jhcik0" path="res://Textures/PlayerSprite/Placeholder/White_Pixel_1x1.jpg" id="2_036nq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ksr6"]
+size = Vector2(42.5, 42.5)
+
+[node name="BasicEnemy" type="CharacterBody2D"]
+script = ExtResource("1_ycmn1")
+Speed = 300.0
+PlayerPath = NodePath("../Player")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.83712316, 0, 0.17444846, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_036nq")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_4ksr6")
