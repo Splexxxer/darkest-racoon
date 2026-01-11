@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d16dufker8hg"
-path="res://.godot/imported/checker_64x64.png-68a4f43e4e650590abe837301605310c.ctex"
+uid="uid://cruxnv0jhcik0"
+path="res://.godot/imported/White_Pixel_1x1.jpg-a485e43a492907db269a975644136812.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Backgrounds/checker_64x64.png"
-dest_files=["res://.godot/imported/checker_64x64.png-68a4f43e4e650590abe837301605310c.ctex"]
+source_file="res://Textures/PlayerSprite/Placeholder/White_Pixel_1x1.jpg"
+dest_files=["res://.godot/imported/White_Pixel_1x1.jpg-a485e43a492907db269a975644136812.ctex"]
 
 [params]
 
