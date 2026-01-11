@@ -1,3 +1,27 @@
-[gd_scene format=3 uid="uid://cebr0lxfreyna"]
+[gd_scene load_steps=3 format=3 uid="uid://cebr0lxfreyna"]
+
+[ext_resource type="Script" uid="uid://i8to3ha7nleh" path="res://CharacterController.cs" id="1_bkxm1"]
+[ext_resource type="Texture2D" uid="uid://d16dufker8hg" path="res://Textures/Backgrounds/checker_64x64.png" id="1_bta6q"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(64, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(584, 283)
+texture = ExtResource("1_bta6q")
+region_enabled = true
+region_rect = Rect2(0, 0, 1300, 800)
+
+[node name="Player" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.43529412, 0.30588236, 0.21568628, 1)
+script = ExtResource("1_bkxm1")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]

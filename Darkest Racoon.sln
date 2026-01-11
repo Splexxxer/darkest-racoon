@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darkest Racoon", "Darkest Racoon.csproj", "{BD79B7BD-0615-4C49-9ACC-39EB84B64061}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD79B7BD-0615-4C49-9ACC-39EB84B64061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD79B7BD-0615-4C49-9ACC-39EB84B64061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD79B7BD-0615-4C49-9ACC-39EB84B64061}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{BD79B7BD-0615-4C49-9ACC-39EB84B64061}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{BD79B7BD-0615-4C49-9ACC-39EB84B64061}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{BD79B7BD-0615-4C49-9ACC-39EB84B64061}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
