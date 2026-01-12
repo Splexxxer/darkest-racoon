@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/WaveScripts/EnemySpawnerBasic.cs" id="1_ykosp"]
+[ext_resource type="PackedScene" path="res://Scenes/enemies/basic_enemy.tscn" id="2_bs2yg"]
+
+[node name="WaveController" type="Node2D"]
+script = ExtResource("1_ykosp")
+EnemyScene = ExtResource("2_bs2yg")
+InitialDelaySeconds = 1.0
