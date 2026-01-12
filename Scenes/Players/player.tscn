@@ -1,15 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://5hiro31fug4w"]
+[gd_scene load_steps=7 format=3 uid="uid://5hiro31fug4w"]
 
 [ext_resource type="Script" uid="uid://i8to3ha7nleh" path="res://Scripts/PlayerRelated/CharacterController.cs" id="1_emajr"]
 [ext_resource type="Script" uid="uid://c51kv7ce0oi2u" path="res://Scripts/PlayerRelated/Health.cs" id="2_8qn36"]
 [ext_resource type="Texture2D" uid="uid://cruxnv0jhcik0" path="res://Textures/PlayerSprite/Placeholder/White_Pixel_1x1.jpg" id="3_6t5aa"]
 [ext_resource type="Script" uid="uid://cerj5gpycrjxy" path="res://Scripts/PlayerRelated/PlayerHurtbox.cs" id="4_8qn36"]
+[ext_resource type="PackedScene" uid="uid://cm2xv2wtecqky" path="res://Scenes/Players/bullet.tscn" id="5_d1s8k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ldjyv"]
 size = Vector2(42.5, 42.5)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_emajr")
+BulletScene = ExtResource("5_d1s8k")
+FireCooldownSeconds = 0.7
+BulletSpawnPointPath = NodePath("BulletSpawn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -41,3 +45,6 @@ NeighborKnockbackMinFraction = 0.9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_ldjyv")
+
+[node name="BulletSpawn" type="Node2D" parent="."]
+position = Vector2(0, -10)
