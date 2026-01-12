@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://wos70640jswo"]
+
+[ext_resource type="Texture2D" uid="uid://0k4uw2rankwx" path="res://Textures/XPSprite/cheees.png" id="1_5v87a"]
+
+[node name="XPDropper" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5v87a")
