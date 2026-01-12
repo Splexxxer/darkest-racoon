@@ -6,6 +6,7 @@ public partial class CharacterController : CharacterBody2D
 	[Export] public float Speed = 600f;
 	[Export] public PackedScene BulletScene;
 	[Export] public float BulletSpeed = 900f;
+	[Export] public int BulletDamage = 1;
 	[Export(PropertyHint.Range, "0,5,0.01")] public float FireCooldownSeconds = 0.2f;
 	public float BulletCooldown
 	{
@@ -105,6 +106,13 @@ public partial class CharacterController : CharacterBody2D
 			Velocity = dir * BulletSpeed,
 		};
 
+		if (bulletBody is Bullet bulletBehavior)
+		{
+			bulletBehavior.Shooter = this;
+			if (BulletDamage > 0)
+				bulletBehavior.Damage = BulletDamage;
+		}
+
 		var notifier = new VisibleOnScreenNotifier2D();
 		bulletBody.AddChild(notifier);
 		instance.Notifier = notifier;
@@ -132,15 +140,35 @@ public partial class CharacterController : CharacterBody2D
 
 	private void OnBulletScreenExited(BulletInstance instance)
 	{
+		RemoveBulletInstance(instance, true);
+	}
+
+	public void NotifyBulletRemoved(Node2D bulletNode)
+	{
+		if (bulletNode == null)
+			return;
+
+		for (int i = 0; i < _activeBullets.Count; i++)
+		{
+			BulletInstance instance = _activeBullets[i];
+			if (instance.Node == bulletNode)
+			{
+				_activeBullets.RemoveAt(i);
+				return;
+			}
+		}
+	}
+
+	private void RemoveBulletInstance(BulletInstance instance, bool queueFree)
+	{
 		if (instance == null)
 			return;
 
 		int index = _activeBullets.IndexOf(instance);
 		if (index >= 0)
-		{
 			_activeBullets.RemoveAt(index);
-			if (GodotObject.IsInstanceValid(instance.Node))
-				instance.Node.QueueFree();
-		}
+
+		if (queueFree && GodotObject.IsInstanceValid(instance.Node))
+			instance.Node.QueueFree();
 	}
 }
