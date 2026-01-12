@@ -2,6 +2,8 @@ using Godot;
 
 public partial class BasicEnemyController : CharacterBody2D, IPlayerTargeted
 {
+	public const string EnemyGroupName = "Enemies";
+
 	[Export] public float Speed = 120f;
 	[Export] public float StopDistance = 0f;
 	[Export(PropertyHint.Range, "0,500,1")] public float KnockbackDistance = 60f;
@@ -11,7 +13,16 @@ public partial class BasicEnemyController : CharacterBody2D, IPlayerTargeted
 	private float _pendingKnockbackDuration;
 	private float _knockbackSpeed;
 
+	public bool IsExperiencingKnockback => _pendingKnockbackMotion.LengthSquared() > 0.001f;
+
 	public Node2D Target { get; set; }
+
+	public override void _Ready()
+	{
+		base._Ready();
+		if (!IsInGroup(EnemyGroupName))
+			AddToGroup(EnemyGroupName);
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -39,23 +50,32 @@ public partial class BasicEnemyController : CharacterBody2D, IPlayerTargeted
 		MoveAndSlide();
 	}
 
-	public void ApplyKnockback(Vector2 direction, float distanceOverride = -1f)
+	public void ApplyKnockback(Vector2 direction, float distanceOverride = -1f, float durationOverride = -1f)
 	{
 		float distance = distanceOverride > 0f ? distanceOverride : KnockbackDistance;
 		if (distance <= 0f || direction.LengthSquared() < 0.0001f)
 			return;
 
 		_pendingKnockbackMotion = direction.Normalized() * distance;
-		if (KnockbackDuration > 0f)
+		float duration = durationOverride > 0f ? durationOverride : KnockbackDuration;
+		if (duration > 0f)
 		{
-			_pendingKnockbackDuration = KnockbackDuration;
-			_knockbackSpeed = distance / KnockbackDuration;
+			_pendingKnockbackDuration = duration;
+			_knockbackSpeed = distance / duration;
 		}
 		else
 		{
 			_pendingKnockbackDuration = 0f;
 			_knockbackSpeed = 0f;
 		}
+	}
+
+	public void ApplySeparation(Vector2 offset)
+	{
+		if (offset == Vector2.Zero)
+			return;
+
+		ApplyImmediateMotion(offset);
 	}
 
 	private void ApplyPendingKnockback(double delta)
@@ -65,7 +85,7 @@ public partial class BasicEnemyController : CharacterBody2D, IPlayerTargeted
 
 		if (_pendingKnockbackDuration <= 0f || _knockbackSpeed <= 0f)
 		{
-			MoveKnockback(_pendingKnockbackMotion);
+			ApplyImmediateMotion(_pendingKnockbackMotion, true);
 			_pendingKnockbackMotion = Vector2.Zero;
 			return;
 		}
@@ -79,7 +99,7 @@ public partial class BasicEnemyController : CharacterBody2D, IPlayerTargeted
 
 		float stepDistance = Mathf.Min(remainingDistance, _knockbackSpeed * (float)delta);
 		Vector2 motion = _pendingKnockbackMotion.Normalized() * stepDistance;
-		MoveKnockback(motion);
+		ApplyImmediateMotion(motion, true);
 
 		if (Mathf.IsZeroApprox(remainingDistance - stepDistance))
 		{
@@ -94,22 +114,58 @@ public partial class BasicEnemyController : CharacterBody2D, IPlayerTargeted
 
 		if (_pendingKnockbackDuration <= 0f)
 		{
-			MoveKnockback(_pendingKnockbackMotion);
+			ApplyImmediateMotion(_pendingKnockbackMotion, true);
 			_pendingKnockbackMotion = Vector2.Zero;
 		}
 	}
 
-	private void MoveKnockback(Vector2 motion)
+	private void ApplyImmediateMotion(Vector2 motion, bool ignoreEnemyCollisions = false)
 	{
 		if (motion == Vector2.Zero)
 			return;
 
-		if (!TestMove(GlobalTransform, motion))
+		if (!ignoreEnemyCollisions)
 		{
-			GlobalPosition += motion;
+			if (!TestMove(GlobalTransform, motion))
+			{
+				GlobalPosition += motion;
+				return;
+			}
+
+			MoveAndCollide(motion);
 			return;
 		}
 
-		MoveAndCollide(motion);
+		Vector2 remaining = motion;
+		int iterations = 0;
+		while (remaining.LengthSquared() > 0.0001f && iterations++ < 8)
+		{
+			if (!TestMove(GlobalTransform, remaining))
+			{
+				GlobalPosition += remaining;
+				return;
+			}
+
+			KinematicCollision2D collision = MoveAndCollide(remaining);
+			if (collision == null)
+				return;
+
+			// Continue moving through other enemies, but stop on solid geometry.
+			if (collision.GetCollider() is BasicEnemyController)
+			{
+				Vector2 traveled = collision.GetTravel();
+				if (traveled.LengthSquared() < 0.0001f)
+					return;
+
+				Vector2 newRemaining = collision.GetRemainder();
+				if (newRemaining.LengthSquared() < 0.0001f)
+					return;
+
+				remaining = newRemaining;
+				continue;
+			}
+
+			return;
+		}
 	}
 }

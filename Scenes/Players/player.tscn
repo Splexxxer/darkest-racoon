@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://5hiro31fug4w"]
+[gd_scene load_steps=6 format=3 uid="uid://5hiro31fug4w"]
 
 [ext_resource type="Script" uid="uid://i8to3ha7nleh" path="res://Scripts/PlayerRelated/CharacterController.cs" id="1_emajr"]
 [ext_resource type="Script" uid="uid://c51kv7ce0oi2u" path="res://Scripts/PlayerRelated/Health.cs" id="2_8qn36"]
@@ -37,6 +37,7 @@ script = ExtResource("2_8qn36")
 [node name="Hurtbox" type="Area2D" parent="."]
 scale = Vector2(0.9, 0.9)
 script = ExtResource("4_8qn36")
+NeighborKnockbackMinFraction = 0.9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_ldjyv")

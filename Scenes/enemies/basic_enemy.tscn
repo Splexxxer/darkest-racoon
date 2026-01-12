@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://6e7ucl5ee0fa"]
+[gd_scene load_steps=6 format=3 uid="uid://6e7ucl5ee0fa"]
 
 [ext_resource type="Script" uid="uid://b5tmtryxc1gpx" path="res://Scripts/Enemies/BasicEnemyController.cs" id="1_ycmn1"]
+[ext_resource type="Script" uid="uid://bvk6i21bjkh8j" path="res://Scripts/Enemies/CollisonChecker.cs" id="2_1svv3"]
 [ext_resource type="Texture2D" uid="uid://cruxnv0jhcik0" path="res://Textures/PlayerSprite/Placeholder/White_Pixel_1x1.jpg" id="2_036nq"]
 [ext_resource type="Script" uid="uid://bxraahwf8r8qt" path="res://Scripts/Enemies/EnemyHitbox.cs" id="3_3070v"]
 
@@ -11,6 +12,10 @@ size = Vector2(42.5, 42.5)
 script = ExtResource("1_ycmn1")
 Speed = 300.0
 KnockbackDistance = 500.0
+
+[node name="CollisonChecker" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4ksr6")
+script = ExtResource("2_1svv3")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8
