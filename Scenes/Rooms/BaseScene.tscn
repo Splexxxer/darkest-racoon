@@ -9,6 +9,7 @@
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_3tdia")]
 
 [node name="Player" parent="." instance=ExtResource("2_5g1xk")]
+FireCooldownSeconds = 0.12
 
 [node name="WaveController" parent="." instance=ExtResource("3_gi5j3")]
 PlayerPath = NodePath("../Player")

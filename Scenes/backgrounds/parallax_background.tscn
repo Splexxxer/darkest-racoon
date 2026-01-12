@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://doii5c4r0rwv2"]
 
-[ext_resource type="Texture2D" uid="uid://d16dufker8hg" path="res://Textures/Backgrounds/Placeholder/checker_64x64.png" id="1_a3h08"]
+[ext_resource type="Texture2D" uid="uid://c1258ghq0ah0l" path="res://Textures/Backgrounds/Placeholder/background.png" id="1_7smcq"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 
@@ -11,6 +11,6 @@ motion_mirroring = Vector2(64, 64)
 texture_filter = 1
 texture_repeat = 2
 position = Vector2(584, 283)
-texture = ExtResource("1_a3h08")
+texture = ExtResource("1_7smcq")
 region_enabled = true
 region_rect = Rect2(0, 0, 1300, 800)
