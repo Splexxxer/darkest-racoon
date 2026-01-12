@@ -10,6 +10,7 @@ size = Vector2(42.5, 42.5)
 [node name="BasicEnemy" type="CharacterBody2D"]
 script = ExtResource("1_ycmn1")
 Speed = 300.0
+KnockbackDistance = 500.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8

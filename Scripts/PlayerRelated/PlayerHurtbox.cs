@@ -2,6 +2,9 @@ using Godot;
 
 public partial class PlayerHurtbox : Area2D
 {
+    // -1 uses the enemy's configured KnockbackDistance, 0 disables knockback entirely
+    [Export(PropertyHint.Range, "-1,500,1")] public float EnemyKnockbackDistance = -1f;
+
     private Health _health;
 
     public override void _Ready()
@@ -22,6 +25,29 @@ public partial class PlayerHurtbox : Area2D
         if (area is IDamageSource dmg)
         {
             _health.TakeDamage(dmg.Damage);
+            KnockbackEnemy(area);
         }
+    }
+
+    private void KnockbackEnemy(Area2D area)
+    {
+        Node parent = GetParent();
+        if (parent is not Node2D playerBody)
+            return;
+
+        BasicEnemyController enemy = area.GetParent() as BasicEnemyController
+            ?? area.Owner as BasicEnemyController;
+        if (enemy == null)
+            return;
+
+        Vector2 dir = enemy.GlobalPosition - playerBody.GlobalPosition;
+        if (dir.LengthSquared() < 0.0001f)
+            return;
+
+        if (EnemyKnockbackDistance == 0f)
+            return;
+
+        float distanceOverride = EnemyKnockbackDistance > 0f ? EnemyKnockbackDistance : -1f;
+        enemy.ApplyKnockback(dir, distanceOverride);
     }
 }
